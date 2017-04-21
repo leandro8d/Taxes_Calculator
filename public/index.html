@@ -1,0 +1,84 @@
+ 
+
+<!DOCTYPE html>
+<html>
+   <head>
+       
+<!-- Author: Leandro Correa
+  Github: leandro8d
+  linkedin/email: leandro8d@hotmail.com -->
+       
+      <script src="lib/js/jquery-3.2.1.min.js"></script>
+      <script src="lib/js/angular.min.js"></script>
+      <script src="lib/js/bootstrap.min.js"></script>
+      <script src="scripts/modules/calculatormodule.js"></script>
+      <script src="scripts/controllers/calculatorcontroller.js"></script>
+      <link href="lib/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+      <link href="lib/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+   </head>
+   <body ng-app="myCalculator" ng-controller="calcController">
+      <div class="panel panel-primary">
+         <div class="panel-heading">
+            <h2 class="panel-title text-center">Taxes Calculator</h2>
+         </div>
+         <div class="panel-body">
+            <div clas="col-sm-12 center-block">
+               <div class="panel panel-primary col-xs-8 col-xs-offset-2">
+                  <div class="panel-body">
+                     <form name="formCalc">
+                        <div class="row text-center">
+                           <div class="col-xs-6 col-xs-offset-3">
+                              <input  type="text" ng-disabled="true" ng-model="result" class="form-control input-lg text-center"/>
+                           </div>
+                        </div>
+                        <div class="row text-center">
+                           <div class="col-xs-6 col-xs-offset-3 form-group">
+                              <label class="radio-inline"><input type="radio" ng-model="selection" value="1" name="optradio">Simple</label>
+                              <label class="radio-inline"><input type="radio" ng-model="selection" value="2" name="optradio">Compound</label>
+                           </div>
+                        </div>
+                        <div class="row text-center">
+                           <div class="col-xs-6 col-xs-offset-4">
+                              <div class="form-group row" ng-class="{'has-error': formCalc.iniValue.$invalid, 'has-success':!formCalc.iniValue.$invalid}">
+                                 <label for="iniValue" class="col-xs-3 col-form-label">Inicial Value:</label>
+                                 <div class="col-xs-4 input-group">
+                                    <input class="form-control" type="number" ng-model="iniValue" name="iniValue" min="00.00" step="00.01" id="iniValue" aria-describedby="iniValue" required />
+                                    <span class="input-group-addon">$</span>
+                                 </div>
+                              </div>
+                              <div class="form-group row" ng-show="selection==2" ng-class="{'has-error': formCalc.dropdownTypeTaxes.$invalid, 'has-success':!formCalc.dropdownTypeTaxes.$invalid}">
+                                 <label for="ddlPeriod" class="col-xs-3 col-form-label">Period:</label>
+                                 <div class="col-xs-4 input-group text-left">
+                                    <select name="ddlPeriod" ng-model="selectedOption" class="btn btn-default dropdown-toggle"  ng-required="selection==2">
+                                       <option class="alert alert-info" ng-repeat="x in typeTaxes" value="{{x.id}}">{{x.desc}}</option>
+                                    </select>
+                                 </div>
+                              </div>
+                              <div class="form-group row" ng-class="{'has-error': formCalc.months.$invalid, 'has-success':!formCalc.months.$invalid}">
+                                 <label for="months" class="col-xs-3 col-form-label">Months:</label>
+                                 <div class="col-xs-4 input-group">
+                                    <input class="form-control" id="months" name="months" ng-model="months"  ng-minlenght="1" type="text" required/>
+                                 </div>
+                              </div>
+                              <div class="form-group row" ng-class="{'has-error': formCalc.tax.$invalid, 'has-success':!formCalc.tax.$invalid}">
+                                 <label for="example-search-input" class="col-xs-3 col-form-label">Tax:</label>
+                                 <div class="col-xs-4 input-group">
+                                    <input class="form-control" type="number" max="100" min="0.01" name="tax"  ng-model="tax" step="0.01" aria-describedby="percent" required />
+                                    <span class="input-group-addon" id="percent">%</span>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="row text-center">
+                              <div class="col-xs-12 input-group">
+                                 <button class="btn btn-primary" ng-disabled="formCalc.$invalid"  ng-click="callFunction()" id="btnCalculate">Calculate</button>
+                              </div>
+                           </div>
+                        </div>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>
